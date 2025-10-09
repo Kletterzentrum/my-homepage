@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Digital Signage – Dynamischer Ticker</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
   <style>
     body {
       margin: 0;
@@ -169,12 +168,12 @@
     updateWeather();
     setInterval(updateWeather, 600000);
 
-    // Slideshow mit Bildern, Dropbox- und YouTube-Videos
+    // Slideshow + Vollbild YouTube
     const mediaFiles = [
       { src: 'Hamm.PNG', type: 'image' },
       { src: 'Witron.PNG', type: 'image' },
       { src: 'BMI.PNG', type: 'image' },
-      // 🎥 YouTube-Video integriert
+      { src: 'https://www.dropbox.com/s/ru93ia2rzgy296q6w25ip/Imagefilm_Dav-Karlsbad_Kletterzentrum_Untertitel.mp4?raw=1', type: 'video', duration: 55 },
       { src: 'https://www.youtube.com/embed/SYPQBZxnUjs?autoplay=1&mute=1&controls=0', type: 'youtube', duration: 60 }
     ];
 
@@ -182,24 +181,29 @@
     const slideImg = document.getElementById('slide-image');
     const slideIframe = document.getElementById('slide-iframe');
 
-    function showNextMedia() {
+    async function enterFullscreen(elem) {
+      if (elem.requestFullscreen) await elem.requestFullscreen();
+      else if (elem.webkitRequestFullscreen) await elem.webkitRequestFullscreen();
+      else if (elem.msRequestFullscreen) await elem.msRequestFullscreen();
+    }
+    async function exitFullscreen() {
+      if (document.exitFullscreen) await document.exitFullscreen();
+      else if (document.webkitExitFullscreen) await document.webkitExitFullscreen();
+    }
+
+    async function showNextMedia() {
       const media = mediaFiles[currentIndex];
 
-      if (media.type === 'video') {
+      if (media.type === 'youtube' || media.type === 'video') {
         slideImg.style.display = 'none';
         slideIframe.style.display = 'block';
         slideIframe.src = media.src;
-        setTimeout(() => {
-          currentIndex = (currentIndex + 1) % mediaFiles.length;
-          showNextMedia();
-        }, media.duration * 1000);
 
-      } else if (media.type === 'youtube') {
-        slideImg.style.display = 'none';
-        slideIframe.style.display = 'block';
-        slideIframe.src = media.src;
-        setTimeout(() => {
-          slideIframe.src = ''; // Stoppt das Video
+        await enterFullscreen(slideIframe);
+
+        setTimeout(async () => {
+          slideIframe.src = '';
+          await exitFullscreen();
           currentIndex = (currentIndex + 1) % mediaFiles.length;
           showNextMedia();
         }, media.duration * 1000);
@@ -209,6 +213,7 @@
         slideIframe.src = '';
         slideImg.style.display = 'block';
         slideImg.src = media.src;
+
         setTimeout(() => {
           currentIndex = (currentIndex + 1) % mediaFiles.length;
           showNextMedia();
@@ -243,5 +248,3 @@
 
 </body>
 </html>
-
-
