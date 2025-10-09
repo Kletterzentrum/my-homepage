@@ -50,7 +50,7 @@
       background-color: #cdecf7;
       position: relative;
     }
-    #slideshow img, #slideshow video {
+    #slideshow img, #slideshow iframe {
       width: auto;
       height: auto;
       max-width: 100%;
@@ -60,9 +60,9 @@
       top: 0;
       left: 0;
     }
-    #slideshow video {
+    #slideshow iframe {
       display: none;
-      background-color: black;
+      border: none;
     }
     .vertical-ticker-container {
       position: fixed;
@@ -111,7 +111,7 @@
 
   <div id="slideshow">
     <img id="slide-image" src="bild1.jpg" alt="Slideshow Bild" />
-    <video id="slide-video" muted autoplay></video>
+    <iframe id="slide-iframe" allow="autoplay; fullscreen"></iframe>
   </div>
 
   <div class="vertical-ticker-container">
@@ -135,6 +135,7 @@
   </div>
 
   <script>
+    // Uhr
     function updateClock() {
       const now = new Date();
       document.getElementById('clock').textContent = now.toLocaleTimeString('de-DE', {
@@ -146,6 +147,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
+    // Wetter
     const weatherIconMap = {
       0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 48: '🌫️',
       51: '🌦️', 53: '🌦️', 55: '🌧️', 61: '🌧️', 63: '🌧️', 65: '🌧️',
@@ -167,56 +169,41 @@
     updateWeather();
     setInterval(updateWeather, 600000);
 
-    // Deine Video-Links hier
+    // Slideshow mit geschätzter Videolänge
     const mediaFiles = [
-      'Hamm.PNG','Witron.PNG','BMI.PNG','Gleißner.PNG','Sparkasse.PNG','Kewog.PNG',
-      'Lehner.PNG','Volksbank.PNG','Heyd.PNG','Grundler.PNG','Bartsch.PNG','Kohl.PNG',
-      'Mehler.PNG','Michl.PNG','TÜV.PNG',
-      'Werbung1.PNG','Werbung2.PNG','Werbung3.PNG',
-      'DAV1.PNG','DAV2.PNG','Verleih.PNG','Preise.PNG','Öffnungszeiten.PNG','Verleih.PNG',
-      'Frauenklettern.PNG','KursübersichtJAN26.PNG','KursübersichtOKT25.PNG','KursübersichtNOV25.PNG',
-      'KursübersichtDEZ25.PNG','Schnupperklettern.PNG','Kurs1.PNG','Kurs2.PNG','Kurs3.PNG','Bewertung.PNG',
-
-      // Hier deine Videos als URLs
-      'https://www.dropbox.com/scl/fi/ru93ia2rzgy296q6w25ip/Imagefilm_Dav-Karlsbad_Kletterzentrum_Untertitel.mp4?rlkey=h26xdk3zr2ogboru9jir7109h&st=uxr8tc0f&raw=1',
-      'https://www.dropbox.com/scl/fi/0luhxe82yrra0tl7ht2s7/Karlsbader-H-tte-sb-23_08_2025.mp4?rlkey=l07p72rukod9wyii1w3qz28df&st=xw9u30lm&raw=1',
-      'https://www.dropbox.com/scl/fi/zctemvh8vmxlpof6hjz4n/DAV-Sektion-sb-23_08_2025.MP4?rlkey=lnhvfyq1mh14nsbzpjdetpt4y&st=zgbef0q0&raw=1'
+      { src: 'Hamm.PNG', type: 'image' },
+      { src: 'Witron.PNG', type: 'image' },
+      { src: 'BMI.PNG', type: 'image' },
+      // Dropbox-Videos mit geschätzter Dauer in Sekunden
+      { src: 'https://www.dropbox.com/s/ru93ia2rzgy296q6w25ip/Imagefilm_Dav-Karlsbad_Kletterzentrum_Untertitel.mp4?raw=1', type: 'video', duration: 55 },
+      { src: 'https://www.dropbox.com/s/0luhxe82yrra0tl7ht2s7/Karlsbader-H-tte-sb-23_08_2025.mp4?raw=1', type: 'video', duration: 65 },
+      { src: 'https://www.dropbox.com/s/zctemvh8vmxlpof6hjz4n/DAV-Sektion-sb-23_08_2025.MP4?raw=1', type: 'video', duration: 70 }
     ];
 
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    const shuffledMedia = shuffle([...mediaFiles]);
     let currentIndex = 0;
     const slideImg = document.getElementById('slide-image');
-    const slideVideo = document.getElementById('slide-video');
+    const slideIframe = document.getElementById('slide-iframe');
 
     function showNextMedia() {
-      const currentFile = shuffledMedia[currentIndex];
-      const isVideo = typeof currentFile === 'string' && currentFile.toLowerCase().endsWith('.mp4');
+      const media = mediaFiles[currentIndex];
 
-      if (isVideo) {
+      if (media.type === 'video') {
         slideImg.style.display = 'none';
-        slideVideo.style.display = 'block';
-        slideVideo.src = currentFile;
-        slideVideo.load();
-        slideVideo.play();
-        slideVideo.onended = () => {
-          currentIndex = (currentIndex + 1) % shuffledMedia.length;
-          showNextMedia();
-        };
-      } else {
-        slideVideo.pause();
-        slideVideo.style.display = 'none';
-        slideImg.style.display = 'block';
-        slideImg.src = currentFile;
+        slideIframe.style.display = 'block';
+        slideIframe.src = media.src;
+
         setTimeout(() => {
-          currentIndex = (currentIndex + 1) % shuffledMedia.length;
+          currentIndex = (currentIndex + 1) % mediaFiles.length;
+          showNextMedia();
+        }, media.duration * 1000);
+      } else {
+        slideIframe.style.display = 'none';
+        slideIframe.src = '';
+        slideImg.style.display = 'block';
+        slideImg.src = media.src;
+
+        setTimeout(() => {
+          currentIndex = (currentIndex + 1) % mediaFiles.length;
           showNextMedia();
         }, 5000);
       }
@@ -224,6 +211,7 @@
 
     window.addEventListener('load', showNextMedia);
 
+    // Vertikaler Ticker
     const ticker = document.getElementById('ticker');
     const emptyLines = 6;
     const originalContent = ticker.innerHTML;
