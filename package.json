@@ -1,7 +1,7 @@
 {
   "name": "my-homepage",
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "update": "node update_members.js"
   },
