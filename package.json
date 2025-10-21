@@ -1,0 +1,19 @@
+{
+  "name": "percent-proxy",
+  "version": "1.0.0",
+  "description": "Proxy to scrape percent-value from dav-karlsbad.de and expose /api/percent",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "NODE_ENV=development node index.js",
+    "lint": "echo \"no lint configured\"",
+    "test": "echo \"no tests yet\" && exit 0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "jsdom": "^22.1.0",
+    "node-fetch": "^2.6.9",
+    "express": "^4.18.2"
+  }
+}
