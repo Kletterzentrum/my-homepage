@@ -240,7 +240,7 @@
         .then(data => {
           const elements = document.querySelectorAll("#mitgliederzahlen");
           elements.forEach(el => {
-            el.innerHTML = `<span class="big">👥 Aktuelle Mitgliederzahl der Sektion Karlsbad: ${data.mitglieder}</span>`;
+            el.innerHTML = `<span class="mitglieder">👥 Aktuelle Mitgliederzahl der Sektion Karlsbad: ${data.mitglieder}</span>`;
           });
         })
         .catch(err => console.error("Fehler beim Laden der Mitgliedszahlen:", err));
@@ -248,6 +248,7 @@
   </script>
 </body>
 </html>
+
 
 
 
