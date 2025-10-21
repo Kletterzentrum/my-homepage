@@ -6,6 +6,9 @@ und unter `/api/percent` bereitstellt.
 ---
 
 ## 📦 Lokale Nutzung
+percent-proxy/index.js
+percent-proxy/Dockerfile
+percent-proxy/package.json
 
 ```bash
 npm install
