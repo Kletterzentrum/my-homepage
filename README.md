@@ -1,5 +1,12 @@
 # percent-proxy
 
-Proxy server that scrapes `.percent-value` from SOURCE_URL and exposes `/api/percent`.
+Ein kleiner Proxy-Server, der die `.percent-value` von [dav-karlsbad.de](https://dav-karlsbad.de) ausliest  
+und unter `/api/percent` bereitstellt.
 
-## Run locally
+---
+
+## 📦 Lokale Nutzung
+
+```bash
+npm install
+npm start
