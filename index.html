@@ -224,24 +224,21 @@
       ticker.style.transform = `translateY(${position}px)`;
       requestAnimationFrame(scrollTicker);
     }
-
     window.addEventListener('load', scrollTicker);
 
     // ----------------- DAV Mitgliedszahlen -----------------
-    fetch("data/mitgliedszahl.json")
-      .then(res => res.json())
-      .then(data => {
-        const el = document.getElementById("mitgliederzahlen");
-        if (el) {
-          el.innerHTML = `<span class="big">🧮 DAV Karlsbad Mitglieder: ${data.mitglieder}</span>`;
-        }
-      })
-      .catch(err => console.error("Fehler beim Laden der Mitgliedszahlen:", err));
-
+    // Erst nach Ticker-Aufbau, alle Kopien aktualisieren
+    window.addEventListener('load', () => {
+      fetch("data/mitgliedszahl.json")
+        .then(res => res.json())
+        .then(data => {
+          const elements = document.querySelectorAll("#mitgliederzahlen");
+          elements.forEach(el => {
+            el.innerHTML = `<span class="big">🧮 DAV Karlsbad Mitglieder: ${data.mitglieder}</span>`;
+          });
+        })
+        .catch(err => console.error("Fehler beim Laden der Mitgliedszahlen:", err));
+    });
   </script>
 </body>
 </html>
-
-
-
-
