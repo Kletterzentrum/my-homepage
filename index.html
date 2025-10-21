@@ -132,6 +132,8 @@
       <p><span class="big">📅 Jahreshauptversammlung 2026</span><br>17.04.2026, um 19:00 Uhr </p>
       <p><span class="big"><i class="fa-brands fa-instagram"></i> Folge uns auf Instagram:</span><br>kletterzentrum.tirschenreuth<br>davkarlsbad</p>
       <p><span class="big">💻 Besucht uns unter:</span><br>www.kletterzentrum-tirschenreuth.de<br>www.dav-karlsbad.de</p>
+      <!-- Platzhalter für Mitgliedszahlen -->
+      <p id="mitgliederzahlen"><span class="big">🧮 DAV Karlsbad Mitglieder: …</span></p>
       <p><span class="news">≡≡≡≡≡≡≡≡≡≡≡</span></p>
     </div>
   </div>
@@ -172,7 +174,7 @@
     updateWeather();
     setInterval(updateWeather, 600000);
 
-    // ----------------- Slideshow (nur Bilder) -----------------
+    // ----------------- Slideshow -----------------
     const mediaFiles = [
       'Hamm.PNG','Witron.PNG','BMI.PNG','Gleißner.PNG','Sparkasse.PNG','Kewog.PNG',
       'Lehner.PNG','Volksbank.PNG','Heyd.PNG','Grundler.PNG','Bartsch.PNG','Kohl.PNG',
@@ -224,8 +226,22 @@
     }
 
     window.addEventListener('load', scrollTicker);
+
+    // ----------------- DAV Mitgliedszahlen -----------------
+    fetch("data/mitgliedszahl.json")
+      .then(res => res.json())
+      .then(data => {
+        const el = document.getElementById("mitgliederzahlen");
+        if (el) {
+          el.innerHTML = `<span class="big">🧮 DAV Karlsbad Mitglieder: ${data.mitglieder}</span>`;
+        }
+      })
+      .catch(err => console.error("Fehler beim Laden der Mitgliedszahlen:", err));
+
   </script>
 </body>
 </html>
+
+
 
 
