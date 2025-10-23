@@ -27,7 +27,7 @@ async function updateMitglieder() {
     console.error("Fehler beim Aktualisieren der Mitgliedszahl:", err);
     // Schreibe Fehlerstatus in JSON, damit Frontend nicht komplett scheitert
     const data = {
-      mitglieder: "unbekannt",
+      mitglieder: "1716",
       stand: new Date().toISOString(),
       error: String(err)
     };
