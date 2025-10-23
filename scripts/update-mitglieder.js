@@ -13,7 +13,7 @@ async function updateMitglieder() {
     const mitglieder = match ? match[1].trim() : null;
 
     const data = {
-      mitglieder: mitglieder ?? "1717",
+      mitglieder: mitglieder ?? "1716",
       stand: new Date().toISOString(),
       source: url
     };
@@ -27,7 +27,7 @@ async function updateMitglieder() {
     console.error("Fehler beim Aktualisieren der Mitgliedszahl:", err);
     // Schreibe Fehlerstatus in JSON, damit Frontend nicht komplett scheitert
     const data = {
-      mitglieder: "1717",
+      mitglieder: "1716",
       stand: new Date().toISOString(),
       error: String(err)
     };
