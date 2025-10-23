@@ -13,7 +13,7 @@ async function updateMitglieder() {
     const mitglieder = match ? match[1].trim() : null;
 
     const data = {
-      mitglieder: mitglieder ?? "unbekannt",
+      mitglieder: mitglieder ?? "1717",
       stand: new Date().toISOString(),
       source: url
     };
