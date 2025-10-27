@@ -24,13 +24,15 @@ fetch("https://diashow-2jk6o7v3h-kasse1s-projects.vercel.app/api/scrape")
   .then(res => res.json())
   .then(data => {
     document.getElementById("output").textContent = data.result;
-  });
 
     const data = {
-      mitglieder: mitglieder ?? text,
+      mitglieder: mitglieder ?? data.result,
       stand: new Date().toISOString(),
       source: url
     };
+    
+  });
+
 
     // Stelle sicher, dass data-Ordner existiert
     if (!fs.existsSync("data")) fs.mkdirSync("data");
