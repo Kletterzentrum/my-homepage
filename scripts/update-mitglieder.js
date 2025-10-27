@@ -1,14 +1,6 @@
 // scripts/update-mitglieder.js
 import fs from "fs";
 
-async function loadPage(){
-  const response = await fetch("https://dav-karlsbad.de");
-  const htmlContent = await response.text();
-  const page = htmlContent;
-}
-
-loadPage();
-
 /*
 async function updateMitglieder() {
   try {
@@ -28,9 +20,11 @@ async function updateMitglieder() {
     };
 */
 
-document.body.innerHTML = page;
-const element = document.getElementsByClassName('percent-value')[0];
-const text = element.innerText;
+fetch("https://diashow-2jk6o7v3h-kasse1s-projects.vercel.app/api/scrape")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("output").textContent = data.result;
+  });
 
     const data = {
       mitglieder: mitglieder ?? text,
