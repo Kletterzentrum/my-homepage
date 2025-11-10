@@ -26,7 +26,6 @@
       color: #F86211;
       background-color: rgba(35, 49, 63, 1);
       padding: 5px 109px;
-      border-radius: 0px;
       z-index: 1000;
     }
 
@@ -38,11 +37,10 @@
       color: #F86211;
       background-color: rgba(35, 49, 63, 1);
       padding: 10px 65px;
-      border-radius: 0px;
-      z-index: 1000;
       display: flex;
       align-items: center;
       gap: 5px;
+      z-index: 1000;
     }
 
     #slideshow {
@@ -83,35 +81,35 @@
       position: relative;
       will-change: transform;
     }
-	  
-  .vertical-ticker p {
-  font-size: 1em;
-  color: white;
-  margin: 25px 10px;      /* Abstand zwischen den Absätzen */
-  text-align: center
-}
+
+    .vertical-ticker p {
+      font-size: 1em;
+      color: white;
+      margin: 25px 10px;
+      text-align: center;
+    }
 
     .big {
       font-size: 1.2em;
       font-weight: bold;
     }
-	
+
     .news {
       color: #F86211;
       font-size: 2.5em;
       font-weight: bold;
     }
 
-	 .mitglieder {
+    .mitglieder {
       color: #F86211;
       font-size: 1.2em;
       font-weight: bold;
-	vertical-align: middle
+      vertical-align: middle;
     }
 
     .fa-instagram {
-      color: white;        
-      font-size: 1.4em;    
+      color: white;
+      font-size: 1.4em;
       vertical-align: middle;
     }
   </style>
@@ -128,17 +126,17 @@
   <div class="vertical-ticker-container">
     <div class="vertical-ticker" id="ticker">
       <p><span class="news">≡≡≡NEWS≡≡≡</span></p>
-      <p><span class="big">📢 Benutzerordnungen wurden angepasst!</span><br>Infos auf der Homepage oder direkt beim Thekenpersonal!</p>
-	<p><span class="big">🛠️ Wegen Routenbau ist die Kletterhalle am 28.11.2025 zwischen 13-18 Uhr und am 29.11.2025 zwischen 09-14 Uhr gesperrt
-      <p><span class="big">🛒 BALD neu im Sortiment:</span><br>Magnete, Anstecker, Chalk, Boulderbürsten!</p>
-      <p><span class="big">🍺 Bier des Monats:</span><br>Franz Josef - Bayrisch Helles 3 €</p>
-      <p><span class="big">🧗🏻‍♂️ Jeden Mittwoch Sektionsklettern - kommt gerne vorbei</p>
-      <p><span class="big">🪛 Neue Kletterroute:</span><br>Noigerl UIAA 7- </p>
-      <p><span class="big">🕔 Winter-Öffnungszeiten wurden angepasst</span></p> 
-      <p><span class="big">🥾 Outdoorkurse 2026</span><br>Klettersteigkurs Anfänger ab sofort online buchbar</p>
-      <p><span class="big">🏔️ Sektionsfahrt Karlsbader Hütte 2026</span><br>07.08 - 09.08.2026 </p>
-      <p><span class="big">📅 Jahreshauptversammlung 2026</span><br>17.04.2026, um 19:00 Uhr </p>
-      <p><span class="mitglieder">👥 Aktuelle Mitgliederzahl der Sektion Karlsbad: 1725 </p>
+      <p><span class="big">📢 Benutzerordnungen wurden angepasst!</span><br>Infos auf der Homepage oder beim Thekenpersonal!</p>
+      <p><span class="big">🛠️ Wegen Routenbau ist die Kletterhalle am 28.11.2025 (13–18 Uhr) und 29.11.2025 (09–14 Uhr) gesperrt</span></p>
+      <p><span class="big">🛒 Bald neu im Sortiment:</span><br>Magnete, Anstecker, Chalk, Boulderbürsten!</p>
+      <p><span class="big">🍺 Bier des Monats:</span><br>Franz Josef – Bayrisch Helles 3 €</p>
+      <p><span class="big">🧗🏻‍♂️ Jeden Mittwoch Sektionsklettern – kommt gerne vorbei!</span></p>
+      <p><span class="big">🪛 Neue Kletterroute:</span><br>Noigerl UIAA 7−</p>
+      <p><span class="big">🕔 Winter-Öffnungszeiten angepasst</span></p> 
+      <p><span class="big">🥾 Outdoorkurse 2026:</span><br>Klettersteigkurs Anfänger ab sofort online buchbar</p>
+      <p><span class="big">🏔️ Sektionsfahrt Karlsbader Hütte 2026:</span><br>07.–09. 08. 2026</p>
+      <p><span class="big">📅 Jahreshauptversammlung 2026:</span><br>17. 04. 2026, 19 Uhr</p>
+      <p><span class="mitglieder">👥 Mitgliederzahl Sektion Karlsbad: 1725</span></p>
       <p><span class="big"><i class="fa-brands fa-instagram"></i> Folge uns auf Instagram:</span><br>kletterzentrum.tirschenreuth<br>davkarlsbad</p>
       <p><span class="big">💻 Besucht uns unter:</span><br>www.kletterzentrum-tirschenreuth.de<br>www.dav-karlsbad.de</p>
       <p><span class="news">≡≡≡≡≡≡≡≡≡≡≡</span></p>
@@ -182,16 +180,21 @@
     setInterval(updateWeather, 600000);
 
     // ----------------- Slideshow -----------------
-    const mediaFiles = [
+    const randomMedia = [
       'Hamm.PNG','Witron.PNG','BMI.PNG','Gleißner.PNG','Sparkasse.PNG','Kewog.PNG',
       'Lehner.PNG','Volksbank.PNG','Heyd.PNG','Grundler.PNG','Bartsch.PNG','Kohl.PNG',
       'Mehler.PNG','Michl.PNG','TÜV.PNG',
       'Werbung1.PNG','Werbung2.PNG','Werbung3.PNG',
       'DAV1.PNG','DAV2.PNG','Verleih.PNG','Preise.PNG','Öffnungszeiten.PNG','Verleih.PNG',
-		'Monatstreff.PNG', 'Sektionsfahrt.PNG',
+      'Monatstreff.PNG', 'Sektionsfahrt.PNG',
       'Frauenklettern.PNG','KursübersichtJAN26.PNG', 'Kletterkönnen.PNG', 
       'KursübersichtNOV25.PNG','KursübersichtDEZ25.PNG','Schnupperklettern.PNG',
       'Kurs1.PNG','Kurs3.PNG','Bewertung.PNG'
+    ];
+
+    const groups = [
+      ['KH1.PNG', 'KH2.PNG', 'KH3.PNG', 'KH4.PNG', 'KH5.PNG', 'KH6.PNG', 'KH7.PNG', 'KH8.PNG', 'KH9.PNG', 'KH10.PNG', 'KH11.PNG'],
+      ['DAV1.PNG', 'DAV2.PNG', 'DAV3.PNG', 'DAV4.PNG', 'DAV5.PNG', 'DAV6.PNG', 'DAV7.PNG', 'DAV8.PNG', 'DAV9.PNG', 'DAV10.PNG', 'DAV11.PNG']
     ];
 
     function shuffle(array) {
@@ -202,16 +205,41 @@
       return array;
     }
 
-    const shuffledMedia = shuffle([...mediaFiles]);
-    let currentIndex = 0;
-    const slideImg = document.getElementById('slide-image');
-
-    function showNextImage() {
-      slideImg.src = shuffledMedia[currentIndex];
-      currentIndex = (currentIndex + 1) % shuffledMedia.length;
-      setTimeout(showNextImage, 10000);
+    function buildPlaylist() {
+      const randomItems = shuffle([...randomMedia]);
+      const shuffledGroups = shuffle([...groups]);
+      const combined = [...randomItems, ...shuffledGroups];
+      return shuffle(combined);
     }
 
+    const slideImg = document.getElementById('slide-image');
+    const slideDuration = 10000; // 10 Sekunden
+    let playlist = buildPlaylist();
+    let currentIndex = 0;
+    let subIndex = 0;
+
+    function showNextImage() {
+      const currentItem = playlist[currentIndex];
+      if (Array.isArray(currentItem)) {
+        slideImg.src = currentItem[subIndex];
+        subIndex++;
+        if (subIndex >= currentItem.length) {
+          subIndex = 0;
+          currentIndex++;
+        }
+      } else {
+        slideImg.src = currentItem;
+        currentIndex++;
+      }
+
+      if (currentIndex >= playlist.length) {
+        playlist = buildPlaylist();
+        currentIndex = 0;
+        subIndex = 0;
+      }
+
+      setTimeout(showNextImage, slideDuration);
+    }
     window.addEventListener('load', showNextImage);
 
     // ----------------- News-Ticker -----------------
@@ -232,7 +260,6 @@
       requestAnimationFrame(scrollTicker);
     }
     window.addEventListener('load', scrollTicker);
-
   </script>
 </body>
 </html>
