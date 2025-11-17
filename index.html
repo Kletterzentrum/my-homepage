@@ -50,7 +50,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #23313f;
+      background-color: #cdecf7;
       position: relative;
     }
 
@@ -178,74 +178,88 @@
     updateWeather();
     setInterval(updateWeather, 600000);
 
-    // ----------------- Slideshow -----------------
-    const randomMedia = [
-      'Hamm.PNG','Witron.PNG','BMI.PNG','Gleißner.PNG','Sparkasse.PNG','Kewog.PNG',
-      'Lehner.PNG','Volksbank.PNG','Heyd.PNG','Grundler.PNG','Bartsch.PNG','Kohl.PNG',
-      'Mehler.PNG','Michl.PNG','TÜV.PNG',
-      
-      'Werbung1.PNG','Werbung2.PNG','Werbung3.PNG', 'Werbung4.PNG', 
-      
-      'DAV1QR.PNG','DAV2QR.PNG','Verleih.PNG','Preise.PNG','Öffnungszeiten.PNG',
-      'Stammtisch.PNG', 'Mitgliedsbeitrag.PNG', 'SonderregelungDezember.PNG', 'Sektionsfahrt.png',
-      
-      'Frauenklettern.PNG', 'Kletterkönnen.PNG', 'Schnupperklettern.PNG',
-      
-      'KursübersichtDez.PNG','KursübersichtJan.PNG', 'KursübersichtFeb.PNG','KursübersichtMärz.PNG','KursübersichtApril.PNG','KursübersichtMai.PNG','KursübersichtJuni.PNG',
-      
-      
-      'ElternsichernKinderNov.PNG', 'ElternsichernKinderMärz.PNG', 'FamilienkletternÜbersicht.PNG',
-      
-      'Modul1Jan.PNG', 'Modul2April.PNG', 'Modul2Feb.PNG' ,'Modul1März.PNG', 'Sturztraining.PNG',
+    // ----------------- Slideshow (angepasst für Absatz-Farben!) -----------------
 
-      'Weihnachtsfeier.png', 'RoutenbauDez.png', 'RoutenbauNov.png',
+    const blockColors = [
+      '#cdecf7', //Hellblau
+      '#23313f', //Dunkelblau
+      '#4fae2eff', //Grün
+      '#cdecf7', //Hellblau
+      '#c6c6c4ff', //Grau
+      '#c6c6c4ff', //Grau
+      '#c6c6c4ff', //Grau
+      '#23313f' //Dunkelblau
     ];
 
-    // Zwei Bildreihen mit eigener Hintergrundfarbe
+    const imageBlocks = [
+      [
+        'Hamm.PNG','Witron.PNG','BMI.PNG','Gleißner.PNG','Sparkasse.PNG',
+        'Kewog.PNG','Lehner.PNG','Volksbank.PNG','Heyd.PNG','Grundler.PNG',
+        'Bartsch.PNG','Kohl.PNG','Mehler.PNG','Michl.PNG','TÜV.PNG'
+      ],
+      ['Werbung1.PNG','Werbung2.PNG','Werbung3.PNG','Werbung4.PNG'],
+      [
+        'DAV1QR.PNG','DAV2QR.PNG','Verleih.PNG','Preise.PNG','Öffnungszeiten.PNG',
+        'Stammtisch.PNG','Mitgliedsbeitrag.PNG','SonderregelungDezember.PNG','Sektionsfahrt.png'
+      ],
+      ['Frauenklettern.PNG','Kletterkönnen.PNG','Schnupperklettern.PNG'],
+      [
+        'KursübersichtDez.PNG','KursübersichtJan.PNG','KursübersichtFeb.PNG',
+        'KursübersichtMärz.PNG','KursübersichtApril.PNG','KursübersichtMai.PNG',
+        'KursübersichtJuni.PNG'
+      ],
+      ['ElternsichernKinderNov.PNG','ElternsichernKinderMärz.PNG','FamilienkletternÜbersicht.PNG'],
+      ['Modul1Jan.PNG','Modul2April.PNG','Modul2Feb.PNG','Modul1März.PNG','Sturztraining.PNG'],
+      ['Weihnachtsfeier.png','RoutenbauDez.png','RoutenbauNov.png']
+    ];
+
     const groups = [
       { images: ['KH1.PNG','KH2.PNG','KH3.PNG','KH4.PNG','KH5.PNG','KH6.PNG','KH7.PNG','KH8.PNG','KH9.PNG','KH10.PNG','KH11.PNG','KH12.PNG'], bg:'#d6cabfff' },
       { images: ['DAV1.PNG','DAV2.PNG','DAV3.PNG','DAV4.PNG','DAV5.PNG','DAV6.PNG','DAV7.PNG','DAV8.PNG','DAV9.PNG','DAV10.PNG','DAV11.PNG'], bg:'#4fae2eff' }
     ];
 
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
+    let media = [];
+    imageBlocks.forEach((block, index) => {
+      const bg = blockColors[index % blockColors.length];
+      block.forEach(file => media.push({ file, bg }));
+    });
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [arr[i], arr[j]] = [arr[j], arr[i]];
       }
-      return array;
+      return arr;
     }
 
     function buildPlaylist() {
-      const randomItems = shuffle([...randomMedia]);
-      const shuffledGroups = shuffle([...groups]);
-      const combined = [...randomItems, ...shuffledGroups];
-      return shuffle(combined);
+      const flat = shuffle([...media]);
+      const grp = shuffle([...groups]);
+      return shuffle([...flat, ...grp]);
     }
 
     const slideImg = document.getElementById('slide-image');
     const slideShowDiv = document.getElementById('slideshow');
-    const slideDuration = 10000; // 10 Sekunden
+    const slideDuration = 10000;
+
     let playlist = buildPlaylist();
     let currentIndex = 0;
     let subIndex = 0;
 
     function showNextImage() {
-      const currentItem = playlist[currentIndex];
+      const item = playlist[currentIndex];
 
-      if (typeof currentItem === 'object' && Array.isArray(currentItem.images)) {
-        // Gruppe → Hintergrundfarbe setzen + Bild anzeigen
-        slideShowDiv.style.backgroundColor = currentItem.bg || '#cdecf7';
-        slideImg.src = currentItem.images[subIndex];
-
+      if (item.images) {
+        slideShowDiv.style.backgroundColor = item.bg;
+        slideImg.src = item.images[subIndex];
         subIndex++;
-        if (subIndex >= currentItem.images.length) {
+        if (subIndex >= item.images.length) {
           subIndex = 0;
           currentIndex++;
         }
       } else {
-        // Einzelbild → Standardfarbe
-        slideShowDiv.style.backgroundColor = '#cdecf7';
-        slideImg.src = currentItem;
+        slideShowDiv.style.backgroundColor = item.bg;
+        slideImg.src = item.file;
         currentIndex++;
       }
 
@@ -281,6 +295,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
