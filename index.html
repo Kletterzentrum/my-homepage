@@ -178,16 +178,19 @@
     updateWeather();
     setInterval(updateWeather, 600000);
 
-    // ----------------- Slideshow (angepasst für Absatz-Farben!) -----------------
+
+    // ----------------------------------------------------------
+    //               ★★★ SYNCHRONISIERTE SLIDESHOW ★★★
+    // ----------------------------------------------------------
 
     const blockColors = [
-      '#cdecf7', //Hellblau Sponsoren
-      '#23313f', //Dunkelblau
-      '#f3f5eaff', //Grün
-      '#cdecf7', //Hellblau
-      '#c6c6c4ff', //Grau
-      '#4fae2eff', //DAV Grün
-      '#d6cabfff', //Karlsbad Braun
+      '#cdecf7',
+      '#23313f',
+      '#f3f5eaff',
+      '#cdecf7',
+      '#c6c6c4ff',
+      '#4fae2eff',
+      '#d6cabfff',
     ];
 
     const imageBlocks = [
@@ -197,16 +200,15 @@
         'Bartsch.PNG','Kohl.PNG','Mehler.PNG','Michl.PNG','TÜV.PNG'
       ],
       [
-      'Werbung1.PNG','Werbung2.PNG','Werbung3.PNG','Werbung4.PNG',
-      'FamilienkletternÜbersicht.PNG', 'RoutenbauDez.PNG','RoutenbauNov.PNG',
-      'Verleih.PNG','Preise.PNG'
+        'Werbung1.PNG','Werbung2.PNG','Werbung3.PNG','Werbung4.PNG',
+        'FamilienkletternÜbersicht.PNG', 'RoutenbauDez.PNG','RoutenbauNov.PNG',
+        'Verleih.PNG','Preise.PNG'
       ],
       [
-      'DAV1QR.PNG','DAV2QR.PNG'
+        'DAV1QR.PNG','DAV2QR.PNG'
       ],
-        
       [
-      'Öffnungszeiten.PNG', 'Weihnachtsfeier.PNG', 'Schnupperklettern.PNG', 'Frauenklettern.PNG'
+        'Öffnungszeiten.PNG', 'Weihnachtsfeier.PNG', 'Schnupperklettern.PNG', 'Frauenklettern.PNG'
       ],
       [
         'KursübersichtDez.PNG','KursübersichtJan.PNG','KursübersichtFeb.PNG',
@@ -214,10 +216,10 @@
         'KursübersichtJuni.PNG', 'Kletterkönnen.PNG', 'ElternsichernKinderNov.PNG','ElternsichernKinderMärz.PNG',
         'Modul1Jan.PNG','Modul2April.PNG','Modul2Feb.PNG','Modul1März.PNG','Sturztraining.PNG', 'Stammtisch.PNG',
         'KlettersteigAnfänger.PNG', 'KlettersteigFortgeschritten.PNG'],
-       [ 
+      [ 
         'Mitgliedsbeitrag.PNG','SonderregelungDezember.PNG',
       ],
-       [
+      [
         'Sektionsfahrt.PNG'
       ],
     ];
@@ -255,33 +257,57 @@
     let currentIndex = 0;
     let subIndex = 0;
 
+
+    // ------------- ★ WICHTIGER NEUER TEIL: Bild-Vorladen ★ -------------
     function showNextImage() {
       const item = playlist[currentIndex];
 
+      // Hintergrund SOFORT setzen
+      slideShowDiv.style.backgroundColor = item.bg;
+
+      // Bild vorladen
+      const img = new Image();
+
       if (item.images) {
-        slideShowDiv.style.backgroundColor = item.bg;
-        slideImg.src = item.images[subIndex];
-        subIndex++;
-        if (subIndex >= item.images.length) {
-          subIndex = 0;
-          currentIndex++;
-        }
+        img.src = item.images[subIndex];
+
+        img.onload = () => {
+          slideImg.src = img.src;
+
+          subIndex++;
+
+          if (subIndex >= item.images.length) {
+            subIndex = 0;
+            currentIndex++;
+          }
+
+          if (currentIndex >= playlist.length) {
+            playlist = buildPlaylist();
+            currentIndex = 0;
+          }
+
+          setTimeout(showNextImage, slideDuration);
+        };
+
       } else {
-        slideShowDiv.style.backgroundColor = item.bg;
-        slideImg.src = item.file;
-        currentIndex++;
-      }
+        img.src = item.file;
 
-      if (currentIndex >= playlist.length) {
-        playlist = buildPlaylist();
-        currentIndex = 0;
-        subIndex = 0;
-      }
+        img.onload = () => {
+          slideImg.src = img.src;
+          currentIndex++;
 
-      setTimeout(showNextImage, slideDuration);
+          if (currentIndex >= playlist.length) {
+            playlist = buildPlaylist();
+            currentIndex = 0;
+          }
+
+          setTimeout(showNextImage, slideDuration);
+        };
+      }
     }
 
     window.addEventListener('load', showNextImage);
+
 
     // ----------------- News-Ticker -----------------
     const ticker = document.getElementById('ticker');
@@ -304,39 +330,6 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
